@@ -114,6 +114,33 @@ export default Ember.Controller.extend(ModalFunctionality, {
     this.appEvents.trigger("modal:body-shown", opts);
   },
 
+  vote(){
+    this.set("isLoading", true);
+
+    this.updateModal({ dismissable: false });
+    console.log("getting vote transaction!")
+    const aragonConnectOptions = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(
+        {
+          vote:"yes",
+          userAddress:this.get("senderAddress"),
+        })
+    };
+    fetch("http://localhost:3001/getVoteTransaction", aragonConnectOptions)
+      .then(result=>result.json()).
+    then(data=> {
+        console.log("JSON:", data);
+        const txn = data["transactions"][0];
+        const args = {from: txn.from, to:txn.to,value:"0x00", data:txn.data }
+        web3.eth.sendTransaction(args, (e, txID) => this.afterProcess(e, txID));
+      }
+    )
+  },
+
   process() {
     this.set("isLoading", true);
 
@@ -211,13 +238,14 @@ export default Ember.Controller.extend(ModalFunctionality, {
     this.set("isLoading", false);
     this.updateModal();
   },
-  
+
   actions: {
     send() {
       if (this.get("isDisabled")) return;
 
       this.clearFlash();
-      this.process();
+      // this.process();
+      this.vote();
     }
   }
 

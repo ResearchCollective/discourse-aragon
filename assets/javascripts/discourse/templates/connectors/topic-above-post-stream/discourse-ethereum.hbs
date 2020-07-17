@@ -1,0 +1,21 @@
+{{#if siteSettings.discourse_ethereum_enabled}}
+  <div class="voting title-voting">
+      {{send-eth-button label="discourse_ethereum.vote_no" model=user close=close action="voteNo"}}
+  </div>
+  <div class="voting title-voting">
+        {{send-eth-button label="discourse_ethereum.vote_yes" model=user close=close action="voteYes"}}
+  </div>
+{{/if}}
+
+{{!-- {{#if model.postStream.loaded}} --}}
+{{!--   {{#if model.postStream.firstPostPresent}} --}}
+{{!--     <div class="voting title-voting"> --}}
+{{!--       {{mount-widget widget="vote-box" args=model --}}
+{{!--         showLogin=(route-action "showLogin") --}}
+{{!--       }} --}}
+{{!--     </div> --}}
+{{!--     {{#if siteSettings.discourse_ethereum_enabled}} --}}
+{{!--       {{send-eth-button model=model}} --}}
+{{!--     {{/if}} --}}
+{{!--   {{/if}} --}}
+{{!-- {{/if}} --}}

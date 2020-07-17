@@ -16,6 +16,59 @@ export default Ember.Component.extend({
   },
 
   actions: {
+
+    voteYes(){
+      window.withWeb3().then( ()=> {
+        const aragonConnectOptions = {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(
+            {
+              vote:"yes",
+              userAddress:this.get("senderAddress"),
+            })
+        };
+
+        fetch("http://localhost:3001/getVoteTransaction", aragonConnectOptions)
+          .then(result=>result.json())
+          .then(data=> {
+              console.log("JSON:", data);
+              const txn = data["transactions"][0];
+              const args = {from: txn.from, to:txn.to,value:"0x00", data:txn.data }
+              web3.eth.sendTransaction(args, (e, txID) => this.afterProcess(e, txID));
+            }
+          )}
+      );    },
+
+    voteNo(){
+      window.withWeb3().then( ()=> {
+
+        const aragonConnectOptions = {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(
+            {
+              vote:"no",
+              userAddress:this.get("senderAddress"),
+            })
+        };
+
+        fetch("http://localhost:3001/getVoteTransaction", aragonConnectOptions)
+          .then(result=>result.json())
+          .then(data=> {
+              console.log("JSON:", data);
+              const txn = data["transactions"][0];
+              const args = {from: txn.from, to:txn.to,value:"0x00", data:txn.data }
+              web3.eth.sendTransaction(args, (e, txID) => this.afterProcess(e, txID));
+            }
+          )}
+      );
+      },
+
     showSendEthModal() {
       if (this.get("disabled")) return;
       window.withWeb3().then( ()=> {

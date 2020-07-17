@@ -3,23 +3,23 @@ import PreferencesAccount from "discourse/controllers/preferences/account";
 
 function initWithApi(api) {
 
-  PreferencesAccount.reopen({
+  // PreferencesAccount.reopen({
 
-    saveAttrNames: ["name", "title", "custom_fields"],
+    // saveAttrNames: ["name", "title", "custom_fields"],
 
-    setEthAddressFor(obj) {
-      obj.set("ethereum_address", this.get("model.custom_fields.ethereum_address"));
-    },
+    // setEthAddressFor(obj) {
+    //   obj.set("ethereum_address", this.get("model.custom_fields.ethereum_address"));
+    // },
 
-    _updateEthereumAddress: function() {
-      if (!this.siteSettings.discourse_ethereum_enabled) return;
-
-      if (this.get("saved")) {
-        this.setEthAddressFor(this.get("model"));
-      }
-    }.observes("saved")
-
-  });
+  //   _updateEthereumAddress: function() {
+  //     if (!this.siteSettings.discourse_ethereum_enabled) return;
+  //
+  //     if (this.get("saved")) {
+  //       this.setEthAddressFor(this.get("model"));
+  //     }
+  //   }.observes("saved")
+  //
+  // });
 
   window.withWeb3 = function () {
     if(window.ethereum) {

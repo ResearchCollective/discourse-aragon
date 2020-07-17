@@ -2,9 +2,10 @@ en:
   js:
     discourse_ethereum:
       ethereum_address: "Ethereum address"
-      send_ethereum: "Send ETH"
-      send_eth_button: "Send ETH"
-      send: "Send"
+      vote_no: "Vote No on Proposal"
+      vote_yes: "Vote Yes on Proposal"
+      send_eth_button: "Vote on Proposal"
+      send: "Vote"
       enter_amount: "Enter the amount"
       balance: "Balance:"
       processing: "Processing transaction..."
