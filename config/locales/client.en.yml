@@ -4,6 +4,7 @@ en:
       ethereum_address: "Ethereum address"
       vote_no: "Vote No on Proposal"
       vote_yes: "Vote Yes on Proposal"
+      submit_proposal: "Submit Proposal"
       send_eth_button: "Vote on Proposal"
       send: "Vote"
       enter_amount: "Enter the amount"

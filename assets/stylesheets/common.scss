@@ -1,4 +1,24 @@
-.user-card-additional-controls-outlet.discourse-ethereum {
+
+.title-voting {
+  // matches core title-wrapper padding
+  padding: 14px;
+  position: relative;
+}
+.title-voting {
+  width: 7em;
+  box-sizing: border-box;
+  float: left;
+}
+// TEMP: RTL overrides
+.title-voting {
+  .rtl & {
+    float: right;
+    padding-right: 0;
+    padding-left: 0.75em;
+  }
+}
+
+  .user-card-additional-controls-outlet.discourse-ethereum {
   clear: right;
   float: right;
 }

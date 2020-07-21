@@ -1,5 +1,5 @@
 import { withPluginApi } from "discourse/lib/plugin-api";
-import PreferencesAccount from "discourse/controllers/preferences/account";
+// import PreferencesAccount from "discourse/controllers/preferences/account";
 
 function initWithApi(api) {
 
@@ -46,6 +46,6 @@ function initWithApi(api) {
 }
 
 export default {
-  name: "extend-for-discourse-ethereum",
+  name: "extend-for-discourse-aragon",
   initialize() { withPluginApi("0.1", initWithApi); }
 };

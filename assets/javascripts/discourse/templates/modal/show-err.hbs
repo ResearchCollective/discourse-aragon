@@ -1,4 +1,4 @@
-{{#d-modal-body id="send-eth" title="discourse_ethereum.send_ethereum"}}
+{{#d-modal-body id="show-err" title="discourse_ethereum.error_message"}}
 
   {{#conditional-loading-spinner condition=isLoading}}
     {{#if isSuccess}}
@@ -20,8 +20,11 @@
       </p>
     {{else}}
       <div class="eth-transaction-info">
+              <div class="eth-transaction-id">{{ error }}</div>
+              {{log error}}
+{{!--       {{console.log("show:",error)}} --}}
 {{!--         {{eth-user user=currentUser ethereumAddress=senderAddress}} --}}
-        {{eth-user user=currentUser}}
+{{!--         {{eth-user user=currentUser}} --}}
 {{!--         {{eth-user user=model}} --}}
 {{!--         {{eth-user user=model ethereumAddress=model.ethereum_address}} --}}
       </div>
@@ -56,9 +59,9 @@
         <div>
           {{d-button
             disabled=isDisabled
-            action="send"
+            action="closeModal"
             class="btn-large btn-primary"
-            label="discourse_ethereum.send"
+            label="discourse_ethereum.ok"
           }}
         </div>
 {{!--       </div> --}}

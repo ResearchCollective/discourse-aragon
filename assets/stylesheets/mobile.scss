@@ -24,3 +24,49 @@
   margin: 0 auto;
   word-wrap: break-word;
 }
+
+
+.title-voting {
+  width: 100%;
+  float: none;
+  max-width: none;
+  text-align: inherit;
+}
+
+.voting-wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.vote-count-wrapper {
+  min-width: 70px;
+  box-sizing: border-box;
+  // match button height
+  min-height: 30px;
+}
+
+.vote-button {
+  max-width: 10em;
+  margin-left: 0.5em;
+  margin-top: 0;
+  white-space: nowrap;
+}
+
+.voting-popup-menu {
+  width: calc(100vw - 100px);
+  // 80px left positioning + 20px .wrap padding
+}
+
+// TEMP: RTL overrides
+.title-voting {
+  .rtl & {
+    float: none;
+  }
+}
+
+.vote-button {
+  .rtl & {
+    margin-left: 0;
+    margin-right: 0.5em;
+  }
+}

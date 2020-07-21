@@ -1,7 +1,7 @@
-# name: discourse-ethereum
+# name: discourse-aragon
 # version: 0.1.4
 # author: ProCourse Team
-# url: https://github.com/santiment/discourse-ethereum
+# url: https://github.com/ResearchCollective/discourse-aragon
 
 enabled_site_setting :discourse_ethereum_enabled
 register_asset "stylesheets/common.scss"
@@ -54,7 +54,7 @@ after_initialize {
 
   require_dependency "application_controller"
   class ::EthereumController < ::ApplicationController
-    requires_plugin("discourse-ethereum")
+    requires_plugin("discourse-aragon")
     before_action :ensure_logged_in
 
     def send_tx_details

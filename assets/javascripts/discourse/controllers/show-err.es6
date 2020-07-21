@@ -240,12 +240,12 @@ export default Ember.Controller.extend(ModalFunctionality, {
   },
 
   actions: {
-    send() {
-      if (this.get("isDisabled")) return;
+    dismiss() {
+      // if (this.get("isDisabled")) return;
 
       this.clearFlash();
       // this.process();
-      this.vote();
+      // this.vote();
     }
   }
 
