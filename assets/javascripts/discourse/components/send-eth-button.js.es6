@@ -8,8 +8,8 @@ export function callWeb3(txn){
   web3.eth.sendTransaction(args, (e, txID) => {
     // this.afterProcess(e, txID);
     if (e){
-      console.log("error",e);
-      showModal("show-err", {error: e});
+      console.log("error: ",e);
+      showModal("show-err", {serverError: e});
       // if (this.get("close")) this.close();
     }
   });
@@ -19,7 +19,12 @@ export function fetchTransactionsWithOptions(endpoint, web3, aragonConnectOption
   fetch(SERVER_URL + endpoint, aragonConnectOptions)
     .then(result=>result.json())
     .then(data=> {
-      console.log("JSON:", data);
+      console.log("Server response:", data);
+      if (data["error"]){
+        throw data["error"];
+        // showModal("show-err", {serverError: e});
+        // return;
+      }
       if (data["forwardingFeePretransaction"]){
         callWeb3(data["forwardingFeePretransaction"])
       }
@@ -28,9 +33,8 @@ export function fetchTransactionsWithOptions(endpoint, web3, aragonConnectOption
       }
     })
     .catch( e => {
-      console.log("error",e);
-
-      showModal("show-err", {error: e});
+      console.log("error: ",e);
+      showModal("show-err", {serverError: e});
     });
 }
 export function vote(preference, model){
@@ -46,6 +50,7 @@ export function vote(preference, model){
           vote:preference,
           url:model.url,
           timestamp:model.created_at,
+          firstPostContent:model.postStream.posts[0].cooked,
           userAddress:web3.eth.defaultAccount,
         })
     };
@@ -64,6 +69,7 @@ export function submitProposal(endpoint, model){
         {
           timestamp:model.created_at,
           url:model.url,
+          firstPostContent:model.postStream.posts[0].cooked,
           userAddress:web3.eth.defaultAccount,
         })
     };

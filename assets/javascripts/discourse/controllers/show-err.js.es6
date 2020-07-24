@@ -55,8 +55,10 @@ export default Ember.Controller.extend(ModalFunctionality, {
       isSuccess: false,
       transactionID: null,
       senderAddress: web3.eth.defaultAccount,
-      symbol: "ETH"
+      symbol: "ETH",
     });
+
+    console.log("modal server error:",this.get("serverError"))
 
     const symbols = ["ETH"];
 
@@ -80,8 +82,18 @@ export default Ember.Controller.extend(ModalFunctionality, {
     this[`setup${ this.get("symbol") == "ETH" ? "ETH" : "ERC20" }`]();
   },
 
+
+
   // computed properties
-  @computed("_balance")
+  @computed("error")
+    showError(error){
+    console.log("modal error:",this.get("error"))
+    console.log("show modal error:",error);
+    return error;
+  },
+
+
+    @computed("_balance")
   balance(balance) {
     if (!balance) return;
 
@@ -108,7 +120,7 @@ export default Ember.Controller.extend(ModalFunctionality, {
   // instance functions
   updateModal(opts) {
     opts = opts || {}
-
+    console.log("modal error:",this.get("error"))
     opts.title = "discourse_ethereum.send_ethereum"
 
     this.appEvents.trigger("modal:body-shown", opts);
@@ -242,7 +254,7 @@ export default Ember.Controller.extend(ModalFunctionality, {
   actions: {
     dismiss() {
       // if (this.get("isDisabled")) return;
-
+      console.log("modal error:",this.get("error"))
       this.clearFlash();
       // this.process();
       // this.vote();

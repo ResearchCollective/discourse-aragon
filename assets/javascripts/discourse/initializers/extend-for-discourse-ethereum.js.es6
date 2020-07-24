@@ -1,6 +1,7 @@
 import { withPluginApi } from "discourse/lib/plugin-api";
 // import PreferencesAccount from "discourse/controllers/preferences/account";
 
+
 function initWithApi(api) {
 
   // PreferencesAccount.reopen({
