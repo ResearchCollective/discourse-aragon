@@ -2,28 +2,73 @@ import showModal from "discourse/lib/show-modal";
 import computed from "ember-addons/ember-computed-decorators";
 
 const SERVER_URL="http://localhost:3001/";
-export function fetchWithOptions(endpoint, web3, aragonConnectOptions){
+export function callWeb3(txn){
+  console.log("transaction!",txn);
+  const args = {from: txn.from, to:txn.to,value:"0x00", data:txn.data };
+  web3.eth.sendTransaction(args, (e, txID) => {
+    // this.afterProcess(e, txID);
+    if (e){
+      console.log("error",e);
+      showModal("show-err", {error: e});
+      // if (this.get("close")) this.close();
+    }
+  });
+}
+
+export function fetchTransactionsWithOptions(endpoint, web3, aragonConnectOptions){
   fetch(SERVER_URL + endpoint, aragonConnectOptions)
     .then(result=>result.json())
     .then(data=> {
       console.log("JSON:", data);
-      const txn = data["transactions"][0];
-      const args = {from: txn.from, to:txn.to,value:"0x00", data:txn.data };
-      web3.eth.sendTransaction(args, (e, txID) => {
-        // this.afterProcess(e, txID);
-        if (e){
-          console.log("error",e);
-            showModal("show-err", {error: e});
-            // // if (this.get("close")) this.sendAction("close");
-            // if (this.get("close")) this.close();
-        }
-      });
+      if (data["forwardingFeePretransaction"]){
+        callWeb3(data["forwardingFeePretransaction"])
+      }
+      for (const txn of data["transactions"]){
+        callWeb3(txn)
+      }
     })
     .catch( e => {
       console.log("error",e);
 
       showModal("show-err", {error: e});
     });
+}
+export function vote(preference, model){
+  window.withWeb3().then( ()=> {
+
+    const aragonConnectOptions = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(
+        {
+          vote:preference,
+          url:model.url,
+          timestamp:model.created_at,
+          userAddress:web3.eth.defaultAccount,
+        })
+    };
+    fetchTransactionsWithOptions("getVoteTransaction",web3, aragonConnectOptions, model);
+  });
+}
+
+export function submitProposal(endpoint, model){
+  window.withWeb3().then( ()=> {
+    const aragonConnectOptions = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(
+        {
+          timestamp:model.created_at,
+          url:model.url,
+          userAddress:web3.eth.defaultAccount,
+        })
+    };
+    fetchTransactionsWithOptions(endpoint, web3, aragonConnectOptions, model);
+  });
 }
 
 export default Ember.Component.extend({
@@ -43,69 +88,22 @@ export default Ember.Component.extend({
 
   actions: {
 
-    submitProposal(){
-      const timestamp = this.get("model").created_at
-      const url = this.get("model").url;
-      console.log("timestamp:",timestamp );
-      console.log("url:", url);
-      console.log("model:",this.get("model"));
-      window.withWeb3().then( ()=> {
-          const aragonConnectOptions = {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(
-              {
-                vote:"yes",
-                timestamp:timestamp,
-                url:url,
-                userAddress:web3.eth.defaultAccount,
-              })
-          };
+    submitNewVoteProposal(){
+      submitProposal("submitNewAragonVote", this.get("model"));
+    },
 
-          fetchWithOptions("submitNewAragonProposal", web3, aragonConnectOptions, this.get("model"));
-    });
+    submitNewTokenRequestProposal(){
+      submitProposal("submitNewAragonTokenRequest", this.get("model"));
     },
 
     voteYes(){
       console.log("model:",this.get("model"));
-      window.withWeb3().then( ()=> {
-        const aragonConnectOptions = {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(
-            {
-              vote:"yes",
-              timestamp:this.get("model").created_at,
-              userAddress:web3.eth.defaultAccount,
-            })
-        };
-
-        fetchWithOptions("getVoteTransaction",web3, aragonConnectOptions, this.get("model"));
-      });
+      vote("yes",this.get("model"))
       },
 
     voteNo(){
       console.log("model:",this.get("model"));
-      window.withWeb3().then( ()=> {
-
-        const aragonConnectOptions = {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(
-            {
-              vote:"no",
-              timestamp:this.get("model").created_at,
-              userAddress:web3.eth.defaultAccount,
-            })
-        };
-        fetchWithOptions("getVoteTransaction",web3, aragonConnectOptions, this.get("model"));
-      });
+      vote("yes",this.get("model"))
       },
 
 

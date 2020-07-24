@@ -2,7 +2,10 @@
   {{#if model.postStream.loaded}}
     {{#if model.postStream.firstPostPresent}}
       <div class="voting title-voting">
-          {{send-eth-button label="discourse_ethereum.submit_proposal" model=model close=close action="submitProposal"}}
+          {{send-eth-button label="discourse_ethereum.submit_token_request" model=model close=close action="submitNewTokenRequestProposal"}}
+      </div>
+      <div class="voting title-voting">
+          {{send-eth-button label="discourse_ethereum.submit_new_vote" model=model close=close action="submitNewVoteProposal"}}
       </div>
       <div class="voting title-voting">
           {{send-eth-button label="discourse_ethereum.vote_no" model=model close=close action="voteNo"}}
@@ -10,7 +13,6 @@
       <div class="voting title-voting">
           {{send-eth-button label="discourse_ethereum.vote_yes" model=model close=close action="voteYes"}}
       </div>
-
     {{/if}}
   {{/if}}
 {{/if}}
