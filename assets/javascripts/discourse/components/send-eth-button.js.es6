@@ -1,7 +1,7 @@
 import showModal from "discourse/lib/show-modal";
 import computed from "ember-addons/ember-computed-decorators";
 
-const SERVER_URL="http://localhost:3001/";
+const SERVER_URL="https://api.researchcollective.io/";
 export function callWeb3(txn){
   console.log("transaction!",txn);
   const args = {from: txn.from, to:txn.to,value:"0x00", data:txn.data };

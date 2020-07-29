@@ -1,8 +1,8 @@
 en:
   site_settings:
-    discourse_ethereum_enabled: "Enable Ethereum plugin"
-    discourse_ethereum_groups: "Enable Ethereum plugin only for member of these groups"
-    discourse_ethereum_all_user: "Enable Ethereum plugin for all user"
+    discourse_ethereum_enabled: "Enable Aragon plugin"
+    discourse_ethereum_groups: "Enable Aragon plugin only for member of these groups"
+    discourse_ethereum_all_user: "Enable Aragon plugin for all users"
     discourse_ethereum_erc20_token: "ERC20 token address"
   discourse_ethereum:
     ether: "Ether"
