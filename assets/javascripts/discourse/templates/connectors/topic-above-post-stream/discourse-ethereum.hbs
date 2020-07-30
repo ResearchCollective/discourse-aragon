@@ -6,20 +6,26 @@
         <div class="voting title-voting">
           {{send-eth-button label="discourse_ethereum.submit_new_vote" model=model close=close action="submitNewVoteProposal"}}
         </div>
+        <div class="voting title-voting">
+            {{send-eth-button label="discourse_ethereum.vote_no" model=model close=close action="voteNo"}}
+        </div>
+        <div class="voting title-voting">
+            {{send-eth-button label="discourse_ethereum.vote_yes" model=model close=close action="voteYes"}}
+        </div>
       {{/if}}
 
       {{#if (eq model.category.nameLower "token requests")}}
         <div class="voting title-voting">
           {{send-eth-button label="discourse_ethereum.submit_token_request" model=model close=close action="submitNewTokenRequestProposal"}}
         </div>
+        <div class="voting title-voting">
+          {{send-eth-button label="discourse_ethereum.vote_no" model=model close=close action="voteNo"}}
+        </div>
+        <div class="voting title-voting">
+            {{send-eth-button label="discourse_ethereum.vote_yes" model=model close=close action="voteYes"}}
+        </div>
       {{/if}}
 
-      <div class="voting title-voting">
-          {{send-eth-button label="discourse_ethereum.vote_no" model=model close=close action="voteNo"}}
-      </div>
-      <div class="voting title-voting">
-          {{send-eth-button label="discourse_ethereum.vote_yes" model=model close=close action="voteYes"}}
-      </div>
     {{/if}}
   {{/if}}
 {{/if}}

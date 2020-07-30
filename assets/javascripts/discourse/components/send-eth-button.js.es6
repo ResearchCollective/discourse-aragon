@@ -109,7 +109,7 @@ export default Ember.Component.extend({
 
     voteNo(){
       console.log("model:",this.get("model"));
-      vote("yes",this.get("model"))
+      vote("no",this.get("model"))
       },
 
 
